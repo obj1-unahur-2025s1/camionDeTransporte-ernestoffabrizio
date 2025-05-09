@@ -8,7 +8,7 @@ object camion {
     cargas.remove(unaCosa)
  }
  method pesoTotal(){
-    peso = cargas.forEach({cosa => cosa.peso()})
+   peso = peso + cargas.fold(0,{acum,item=>acum+item.peso()})
     return(peso)
  }
  method pesoEsPar(){
@@ -34,7 +34,6 @@ method puedeCircularEnRuta(unValor){
             self.algunoTienePeligrosidad(unValor) )
 }
 method tieneAlgoEntre(minimo, maximo){
-   
 }
 method cosaMasPesada(){
    return(cargas.max({x=>x.peso()}))

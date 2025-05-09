@@ -30,8 +30,8 @@ object paqueteLadrillos{
     method peligrosidad(){
         return(2)
         }
-    method apilarLadrillo(){ 
-        cantLadrillos =+ cantLadrillos 
+    method apilarLadrillos(unaCantidad){ 
+        cantLadrillos = cantLadrillos + unaCantidad 
         }
     method quitarLadrillo() { 
         cantLadrillos =- cantLadrillos
@@ -44,6 +44,9 @@ object arenaAGranel{
     }
     method peligrosidad(){
         return(1)
+    }
+    method peso(){
+        return(peso)
     }
 }
 object bateriaAntiaerea{
@@ -73,18 +76,22 @@ object bateriaAntiaerea{
 }
 object contenedorPortuario{
     const cosas = #{}
-    var peso = 0
     method peso(){
-        peso = cosas.forEach({cosa => cosa.peso()})
-        return(peso)
+        return(cosas.fold(0,{acum,cosa=>acum+cosa.peso()}))
     }
     method peligrosidad(){
         if (!cosas.isEmpty()){
-            return(cosas.max({x=>x.peligrosidad()}))
+            return(cosas.max({x=>x.peligrosidad()}).peso())
         }
         else{
             return(0)
         }
+    }
+    method añadir(unaCosa){
+        cosas.add(unaCosa)
+    }
+    method cosas(){
+        return(cosas)
     }
 }
 object residuosRadioactivos{
@@ -99,7 +106,7 @@ object residuosRadioactivos{
         pesoTotal = unValor
     }
 }
-object embajale{
+object embalaje{
     var contenido = null
     method envolver(unaCosa){
         contenido = unaCosa
